@@ -3,18 +3,26 @@ import GameBoard from "./components/GameBoard";
 import Player from "./components/Player";
 import Log from "./components/Log";
 
+function driveActivePlayer(gameTurns) {
+  let currentPlayer = 'X';
+
+  if(gameTurns.length > 0 && gameTurns[0].player == 'X') {
+    currentPlayer = 'O';
+  }
+  return currentPlayer;
+}
+
 function App() {
   const [gameTurns, setGameTurns] = useState([]);
-  const [activePalyer, setActivePalyer] = useState('X');
+  // const [activePalyer, setActivePalyer] = useState('X');
+
+  const activePalyer = driveActivePlayer(gameTurns);
 
   function handeSelectSquare (rowIndex, colIndex) {
-    setActivePalyer((currentActivePalyer) => currentActivePalyer === 'X' ? 'O': 'X');
+    // setActivePalyer((currentActivePalyer) => currentActivePalyer === 'X' ? 'O': 'X');
     setGameTurns(prevTurns => {
-      let currentPlayer = 'X';
+      const currentPlayer = driveActivePlayer(prevTurns);
 
-      if(prevTurns.length > 0 && prevTurns[0].player == 'X') {
-        currentPlayer = 'O';
-      }
       const updatedTurns = [
         { square:{ row: rowIndex, col: colIndex}, player:currentPlayer},
         ...prevTurns];
