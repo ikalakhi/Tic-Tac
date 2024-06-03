@@ -29,7 +29,7 @@ function App() {
           <Player initialName="Player 1" symbol="X" isActive={activePalyer === 'X'}/>
           <Player initialName="Player 2" symbol="O" isActive={activePalyer === 'O'}/>
         </ol>
-        <GameBoard onSelectSquare={handeSelectSquare} activePlayerSymbol={activePalyer}/>
+        <GameBoard onSelectSquare={handeSelectSquare} turns={gameTurns}/>
       </div>
       <Log/>
     </main>
