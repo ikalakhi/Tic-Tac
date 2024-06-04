@@ -25,7 +25,7 @@ function App() {
 
   const activePalyer = driveActivePlayer(gameTurns);
 
-  let gameBoard = initialGameBoard;
+  let gameBoard = [...initialGameBoard.map(array => [...array])];
   let winner;
 
   for(const turn of gameTurns) {
@@ -58,6 +58,10 @@ function App() {
     });
   }
 
+  function handelRestart() {
+    setGameTurns([]);
+  }
+
   return (
     <main>
       <div id="game-container">
@@ -65,7 +69,7 @@ function App() {
           <Player initialName="Player 1" symbol="X" isActive={activePalyer === 'X'}/>
           <Player initialName="Player 2" symbol="O" isActive={activePalyer === 'O'}/>
         </ol>
-        {(winner || hasDraw) && <GameOver winner={winner}/>}
+        {(winner || hasDraw) && <GameOver winner={winner} onRestart={handelRestart}/>}
         <GameBoard onSelectSquare={handeSelectSquare} board={gameBoard}/>
       </div>
       <Log turns={gameTurns}/>
