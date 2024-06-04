@@ -1,8 +1,14 @@
 import { useState } from "react";
 
-export default function Player({initialName, symbol, isActive}) {
+export default function Player({initialName, symbol, isActive, onChangeName}) {
     const [playerName, setPlayerName] = useState(initialName);
     const [isEditing, setIsEding] = useState(false);
+
+    function handelClick() {
+        setIsEding(editing => !editing);
+        if(isEditing)
+            onChangeName(symbol, playerName)
+    }
 
     const handelChange = (e) => {
         setPlayerName(e.target.value);
@@ -20,7 +26,7 @@ export default function Player({initialName, symbol, isActive}) {
               {editablPlayerName}
               <span className="player-symbol">{symbol}</span>
             </span>
-            <button onClick={() => setIsEding(editing => !editing)}>{btnCaption}</button>
+            <button onClick={handelClick}>{btnCaption}</button>
         </li>
     );
 }

@@ -21,6 +21,10 @@ function driveActivePlayer(gameTurns) {
 }
 
 function App() {
+  const [player, setPlayer] = useState({
+    'X' : 'player 1',
+    'O' : 'player 2'
+  })
   const [gameTurns, setGameTurns] = useState([]);
 
   const activePalyer = driveActivePlayer(gameTurns);
@@ -41,7 +45,7 @@ function App() {
     const thirdSquare = gameBoard[combinations[2].row][combinations[2].col];
 
     if(firstSquare && firstSquare === secondSquare && firstSquare === thirdSquare) {
-      winner = firstSquare;
+      winner = player[firstSquare];
     }
   }
 
@@ -62,12 +66,21 @@ function App() {
     setGameTurns([]);
   }
 
+  function handelPlayerNameChange(symbol, newName) {
+    setPlayer(prevPlayer => {
+      return {
+        ...prevPlayer,
+        [symbol] : newName
+      };
+    })
+  }
+
   return (
     <main>
       <div id="game-container">
         <ol id="players" className="highlight-player">
-          <Player initialName="Player 1" symbol="X" isActive={activePalyer === 'X'}/>
-          <Player initialName="Player 2" symbol="O" isActive={activePalyer === 'O'}/>
+          <Player initialName="Player 1" symbol="X" isActive={activePalyer === 'X'} onChangeName={handelPlayerNameChange}/>
+          <Player initialName="Player 2" symbol="O" isActive={activePalyer === 'O'} onChangeName={handelPlayerNameChange}/>
         </ol>
         {(winner || hasDraw) && <GameOver winner={winner} onRestart={handelRestart}/>}
         <GameBoard onSelectSquare={handeSelectSquare} board={gameBoard}/>
